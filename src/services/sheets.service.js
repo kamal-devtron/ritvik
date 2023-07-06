@@ -21,7 +21,7 @@ const getAuthUrl =  async () => {
 };
 
 const getToken = async (req) => {
-	
+
 	const oauth2Client = new google.auth.OAuth2(
 		process.env.CLIENT_ID,
 		process.env.CLIENT_SECRET,
@@ -72,6 +72,7 @@ const getToken = async (req) => {
 };
 
 const callToken = async (email) => {
+	// console.log(email);
 	const currUser = await user.findOne({
 		where: {
 			email: email,
@@ -81,6 +82,7 @@ const callToken = async (email) => {
 	if(!currUser){ 
 		return null;
 	}
+
 
 	return currUser?.access_token;
 };
@@ -120,9 +122,12 @@ const createSheet = async (accessToken,userEmail) => {
 	});
 	
 	const sheetID = data.data.spreadsheetId;
+	console.log(sheetID);
 
+
+	// aware of typo in spreedsheetId
 	await user.update({
-		spreadsheetId: sheetID,
+		spreedsheetId: sheetID,
 	},
 	{
 		where: {
@@ -168,7 +173,9 @@ const updateSheet = async (accessToken, questionName) => {
 		}
 	});
 
-	const spreadsheetId = currUser?.spreadsheetId;
+	// aware of typo in spreedsheetId
+	const spreadsheetId = currUser?.spreedsheetId;
+	console.log('spreadsheetId',spreadsheetId);
 
 	const range = 'A1';
 

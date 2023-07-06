@@ -11,26 +11,30 @@ const getAuthUrl = async (req, res) => {
 };
 
 const getToken = async (req, res) => {
+	console.log('getToken-controller');
 	try {
-		const accessToken =  await sheetsService.getToken(req);
+		await sheetsService.getToken(req);
+		// console.log('accessToken', accessToken);
 		const script = `
 				<script>
-					window.opener.postMessage({ access_token: '${accessToken}' }, '${req.headers.origin}');
-					window.close();
+				  window.close();
 				</script>
 				`;
-		res.send(script);
+		res.status(200).send(script);
 	} catch (err) {
 		res.status(500).json(err);
 	}
 };
 
 const callToken = async (req, res) => {
+	console.log('callToken');
 	try {
-		const {email} = req.body;
+		// console.log('req.query', req.query);
+		const {email} = req.query;
 		const response = await sheetsService.callToken(email);
+		console.log('response', response);
 		if(!response) { res.status(401).json({message: 'Unauthorized'}); }
-		res.status(200).json(response);
+		res.status(200).json({accessToken: response});
 	} catch (err) {
 		res.status(500).json(err);
 	}
@@ -38,8 +42,9 @@ const callToken = async (req, res) => {
 
 
 const createSheet = async (req, res) => {
+	console.log('createSheet');
 	try {
-		const accessToken = req.headers.authorization;
+		const accessToken = req.user.accessToken;
 		const userEmail = req.user.userEmail;
 		const sheet = await sheetsService.createSheet(accessToken, userEmail);
 		res.status(200).json({sheetID:sheet});
@@ -50,9 +55,12 @@ const createSheet = async (req, res) => {
 
 const updateSheet = async (req, res) => {
 	try {
-		const accessToken = req.headers.authorization;
+		const accessToken = req.user.accessToken;
 		const questionName = req.body.questionName;
+		console.log('accessToken', accessToken);
+		console.log('questionName', questionName);
 		const sheet = await sheetsService.updateSheet(accessToken, questionName);
+		console.log('sheet', sheet);
 		res.status(200).json(sheet);
 	} catch (err) {
 		res.status(500).json(err);
