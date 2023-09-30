@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": null,
-    "database": "leetsheetDB",
+    "database": "leetsheet_users",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port":5432
@@ -10,7 +10,7 @@
   "test": {
     "username": "postgres",
     "password": null,
-    "database": "leetsheetDB",
+    "database": "leetsheet_users",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port":5432
@@ -18,7 +18,7 @@
   "production": {
     "username": "postgres",
     "password": null,
-    "database": "leetsheetDB",
+    "database": "leetsheet_users",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port":5432

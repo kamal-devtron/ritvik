@@ -15,9 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   user.init({
     email: DataTypes.STRING,
-    spreedsheetId: DataTypes.STRING,
+    spreadsheetId: DataTypes.STRING,
     access_token: DataTypes.STRING,
-    refresh_token: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'user',

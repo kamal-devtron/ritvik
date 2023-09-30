@@ -12,13 +12,10 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
-      spreedsheetId: {
+      spreadsheetId: {
         type: Sequelize.STRING
       },
       access_token: {
-        type: Sequelize.STRING
-      },
-      refresh_token: {
         type: Sequelize.STRING
       },
       createdAt: {
