@@ -2,12 +2,11 @@
 const {user} = require('../../database/models');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-console.log('passport');
 passport.use(new GoogleStrategy({
 	clientID: process.env.CLIENT_ID,
 	clientSecret: process.env.CLIENT_SECRET,
 	scope: ['profile', 'email','https://www.googleapis.com/auth/spreadsheets'],
-	callbackURL: 'http://localhost:4000/leetsheet/auth/callback'
+	callbackURL: 'http://localhost:4000/leetsheet/auth/callback',
 },
 function(accessToken, refreshToken, profile, done) {
 	profile.accessToken = accessToken;
@@ -16,6 +15,7 @@ function(accessToken, refreshToken, profile, done) {
 			email: profile.emails[0].value,
 		},
 		defaults: {
+			email: profile.emails[0].value,
 			access_token: accessToken,
 		}
 	});
@@ -31,8 +31,7 @@ passport.deserializeUser(function(user, done) {
 });
 
 const isUser = async (req, res,next) => {
-	console.log('isUser');
-	req.user ? next() : res.redirect('/leetsheet/auth');
+	req.user ? next() : res.sendStatus(401);
 };
 
 module.exports = {

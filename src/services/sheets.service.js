@@ -76,7 +76,7 @@ const addQuestion = async (accessToken,userEmail, questionName) => {
 
 		let sheetID;
 
-		if(currentUser.spreadsheetId){
+		if(currentUser?.spreadsheetId){	
 			sheetID = currentUser.spreadsheetId;
 		}
 		else{
@@ -96,7 +96,6 @@ const addQuestion = async (accessToken,userEmail, questionName) => {
 		return updatedData;
 	}
 	catch(err){
-		console.log(err);
 		return err;
 	}
 	
